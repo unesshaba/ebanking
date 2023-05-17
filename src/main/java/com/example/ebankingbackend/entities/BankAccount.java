@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BankAccount {
+public  abstract class   BankAccount {
 
     @Id
     private String id;
