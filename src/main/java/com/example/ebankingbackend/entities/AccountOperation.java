@@ -1,11 +1,12 @@
 package com.example.ebankingbackend.entities;
 
+import com.example.ebankingbackend.enums.OperationType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Data

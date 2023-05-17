@@ -1,17 +1,18 @@
 package com.example.ebankingbackend;
 
-import com.example.ebankingbackend.entities.AccountStatus;
+import com.example.ebankingbackend.entities.AccountOperation;
+import com.example.ebankingbackend.enums.AccountStatus;
 import com.example.ebankingbackend.entities.CurrentAccount;
 import com.example.ebankingbackend.entities.Customer;
 import com.example.ebankingbackend.entities.SavingAccount;
+import com.example.ebankingbackend.enums.OperationType;
 import com.example.ebankingbackend.repositories.AccountOperationRepository;
 import com.example.ebankingbackend.repositories.BankAccountRepository;
 import com.example.ebankingbackend.repositories.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-
+import org.springframework.context.annotation.Bean;
 import java.util.Date;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -22,7 +23,7 @@ public class EbankingBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(EbankingBackendApplication.class, args);
     }
-
+@Bean
     CommandLineRunner start(CustomerRepository customerRepository,
                             BankAccountRepository bankAccountRepository,
                             AccountOperationRepository accountOperationRepository) {
@@ -52,6 +53,17 @@ public class EbankingBackendApplication {
                 savingAccount.setInterestRate(5.5);
                 bankAccountRepository.save(savingAccount);
 
+            });
+            bankAccountRepository.findAll().forEach(acc->{
+                for (int i=0  ;i<10;i++){
+                    AccountOperation accountOperation= new AccountOperation();
+                    accountOperation.setOperationDate( new  Date());
+                    accountOperation.setAmount(Math.random()*12000);
+                    accountOperation.setType(Math.random()>0.5? OperationType.DEBIT :OperationType.CREDIT);
+                    accountOperation.setBankAccount(acc);
+                    accountOperationRepository.save(accountOperation);
+
+                }
             });
 
         };
