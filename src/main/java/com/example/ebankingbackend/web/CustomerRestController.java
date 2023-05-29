@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
 @Slf4j
 
@@ -19,6 +20,11 @@ public class CustomerRestController {
     @GetMapping("/customers")
     public List<CustomerDTO>customers(){
         return bankAccountService.listCustomer();
+    }
+
+    @GetMapping("/customers/search")
+    public List<CustomerDTO>searchCustomers(@RequestParam(name="keyword",defaultValue = "") String keyword){
+        return bankAccountService.searchCustomer("%"+keyword+"%");
     }
     @GetMapping("/customers/{id}")
     public CustomerDTO getCustomer( @PathVariable(name = "id") Long customerId){
